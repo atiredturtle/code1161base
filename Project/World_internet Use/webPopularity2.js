@@ -38,7 +38,15 @@ function drawRegionsMap() {
         var selectedItem = chart.getSelection()[0];
         if (selectedItem) {
             var country = data.getValue(selectedItem.row, 0);
-            alert('The user selected ' + country);
+            $("#countryModal").modal();
+            $("#modalHead").text(country);
+            var listHTML = "<ol>"
+            for (var i = 0; i < 10; i++){
+                listHTML += "<li>"+dict[country][i]+"</li>";
+            }
+            listHTML+= "</ol";
+            $("#modalBody").html(listHTML);
+
         }
     } 
 
