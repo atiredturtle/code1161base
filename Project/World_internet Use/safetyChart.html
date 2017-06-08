@@ -16,27 +16,23 @@
     </head>
     <body>
         <a href="world.html">Click to go back</a>
-        <h1>You're in the webcharts section!</h1>
-
-        <canvas id="popularityChart" width="1300" height="400"></canvas>
+        <h1>You're in the Safety section!</h1>
 
         <div class="row">
-        <div class="col-centered">
-            <table id="sliderTable">
-                <tr>
-                    <td>Tail length</td>
-                    <td> <div id="itemSlider"></div></td>
-                </tr>
-
-                <tr>
-                    <td>Sum popularity up to:</td>
-                    <td><div id="popularitySlider"></div></td>
-                </tr>
-            </table>
-        </div>
+            
+            <div class="col-sm-4 col-sm-offset-2 text-center">
+                    <h1>Child Safety Rankings</h1>
+                    <canvas id="safetyChart"></canvas>
+            </div>
+            <div class="col-sm-4 text-center">
+                <h1>Trustworthness Rankings</h1>
+                <canvas id="trustChart"></canvas>
+            </div>
         </div>
         
+        
+        
         <script src="papaparse.min.js"></script>
-        <script src="generateWebCharts.js"></script>   
+        <script src="generateSafetyChart.js"></script>   
     </body>
 </html>
