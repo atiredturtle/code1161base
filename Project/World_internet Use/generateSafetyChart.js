@@ -29,9 +29,10 @@ function getRandomColor(){
 }
 
 // ----------------- CODE -----------------
+// calls prepareCharts() when document is ready
+$(document).ready(function(){prepareCharts();});
 
 function prepareCharts(){
-
     // parse data
     Papa.parse(url, {
         download: true,
@@ -40,7 +41,7 @@ function prepareCharts(){
         complete: function(results) {  
             processData(results.data); // populate dicts with CSV data
             drawChart(safetyDict, "safetyChart", "Child safety rating of website");
-           drawChart(trustDict, "trustChart", "Trustworthiness rating of webiste");
+            drawChart(trustDict, "trustChart", "Trustworthiness rating of webiste");
         }
     });
 }
@@ -71,7 +72,7 @@ function drawChart(d, ctx, label){
                     'rgba(255,   0,   0, 0.6)',
                     'rgba(100, 100, 100, 0.6)'];    
     
-    
+    // adds data to array
     for (var i = 0; i < my_keys.length; i++) {
         my_data.push(d[my_keys[i]]);
     }
@@ -86,13 +87,8 @@ function drawChart(d, ctx, label){
             }]
         },
         backgroundColor: my_colors,
-        options: {
-        }
     });
 }
 
 
-$(document).ready(function(){
-    prepareCharts();
-});
 

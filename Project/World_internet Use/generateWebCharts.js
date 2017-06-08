@@ -28,9 +28,10 @@ function getRandomColor(){
 }
 
 // ----------------- CODE -----------------
+// calls prepareCharts() when document is ready
+$(document).ready(function(){ prepareCharts();});
 
 function prepareCharts(){
-
     // parse data
     Papa.parse(url, {
         download: true,
@@ -54,13 +55,9 @@ function processData(d){
 
         // for website popularity (dict value is number of countries that have it as a fav)
         if (website in popDict){
-            if (item.Country_Rank in popDict[website]){
-                popDict[website][item.Country_Rank] += 1;
-            } else {
-                popDict[website][item.Country_Rank] = 1;
-            }
+            popDict[website][item.Country_Rank] += 1
         } else {
-            popDict[website] = [];
+            popDict[website] =  new Array(51).fill(0); // crate new empty array
             popDict[website][item.Country_Rank] = 1;
         }
     }
@@ -80,6 +77,7 @@ function drawPopChart(top=MAX_TOP, tail=MIN_TAIL){
         d[key] = occ;
     }
 
+    // destroy old chart (if exists)
     if (myChart !== undefined) {myChart.destroy();}
     var my_keys = [];
     var my_data = [];
@@ -100,22 +98,16 @@ function drawPopChart(top=MAX_TOP, tail=MIN_TAIL){
         data: {
             labels: my_keys,
             datasets: [{
-                label: '# popular votes from 1-'+parseInt(top),
+                label: '# popular votes from 1-' + parseInt(top),
                 data: my_data,
                 backgroundColor: my_colors,
             }]
         },
-        options: {
-        }
     });
 }
 
 
-$(document).ready(function(){
-    prepareCharts();
-});
-
-
+// Sets up the sliders 
 function prepareSliders(){
     // load sliders
     var itemSlider = document.getElementById('itemSlider');
@@ -136,11 +128,7 @@ function prepareSliders(){
             density: 10
         }
     });
-    itemSlider.noUiSlider.on('change', function(){
-        var tail = itemSlider.noUiSlider.get();
-        var top  = popularitySlider.noUiSlider.get();
-	    drawPopChart(top, tail); 
-    });
+    itemSlider.noUiSlider.on('change', updatePopChart);
 
     var popularitySlider = document.getElementById('popularitySlider');
     popularitySlider.style.width = '400px';
@@ -159,12 +147,12 @@ function prepareSliders(){
             density: 10
         }
     });
-    popularitySlider.noUiSlider.on('change', function(){
+    popularitySlider.noUiSlider.on('change', updatePopChart);
+    function updatePopChart(){ 
         var tail = itemSlider.noUiSlider.get();
         var top  = popularitySlider.noUiSlider.get();
         drawPopChart(top, tail); 
-    });
-
+    }
 }
 
 

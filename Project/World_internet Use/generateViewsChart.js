@@ -26,9 +26,10 @@ function getRandomColor(){
 }
 
 // ----------------- CODE -----------------
+// calls prepareCharts() when document is ready
+$(document).ready(function(){ prepareCharts();});
 
 function prepareCharts(){
-
     // parse data
     Papa.parse(url, {
         download: true,
@@ -45,12 +46,15 @@ function prepareCharts(){
 // takes parsed CSV and populates the dicts accordingly
 function processData(d){
     for (var i = 0; i < d.length; i++){
-        var item = d[i];
-        var website = item.Website;
+        var website = d[i].Website;
 
+        // if the website hasn't been added
         if (!(website in viewsDict)){
-            numDailyVisitors = item.Avg_Daily_Visitors.replace(/\s/g,""); 
+            // strip all whitespaces
+            numDailyVisitors = d[i].Avg_Daily_Visitors.replace(/\s/g,""); 
+            // if the value is 'N/A' default to 0
             if (numDailyVisitors == 'N/A')  numDailyVisitors = 0;
+            // convert to integer and add to viewsDict
             viewsDict[website] = parseInt(numDailyVisitors);
         } 
     }
@@ -59,20 +63,22 @@ function processData(d){
 
 function drawViewsChart(tail=MIN_TAIL){
     // reduce dictionary
-    var d = viewsDict; 
     if (myChart !== undefined) {myChart.destroy();}
     var my_keys = [];
     var my_data = [];
     var my_colors = [];
 
-    var sortedKeys = Object.keys(d).sort(function(a, b) {return d[b] - d[a];});
+    // sorts the keys via the values
+    var sortedKeys = Object.keys(viewsDict).sort(function(a, b) {return viewsDict[b] - viewsDict[a];});
 
     for (var i = 0; i < tail ; i++) {
         var key = sortedKeys[i];
         my_keys.push(key);
         my_colors.push(getRandomColor());
-        my_data.push(d[key]);
+        my_data.push(viewsDict[key]);
     }
+
+    // create the chart
     var ctx = "viewsChart";
     myChart = new Chart(ctx, {
         type: 'bar',
@@ -83,18 +89,11 @@ function drawViewsChart(tail=MIN_TAIL){
                 data: my_data,
                 backgroundColor: my_colors,
             }]
-        },
-        options: {
         }
     });
 }
 
-
-$(document).ready(function(){
-    prepareCharts();
-});
-
-
+// initalises the slider (more can be added)
 function prepareSliders(){
     // load sliders
     var itemSlider = document.getElementById('itemSlider');
