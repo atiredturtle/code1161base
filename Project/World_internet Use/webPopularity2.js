@@ -1,7 +1,7 @@
 // GLOBALS
 var url = "https://raw.githubusercontent.com/atiredturtle/code1161base/master/Project/Web_Scrapped_websites.csv";
 var NUM_FAVS = 5
-var website_to_draw = "www.facebook.com"; // default
+var website_to_draw = "www.google.com"; // default
 var CSVdata;
 var dict = {};
 var allSitesDict = {};
@@ -21,6 +21,10 @@ function drawRegionsMap() {
        // datalessRegionColor:'#000000',
         colorAxis: {
             colors: ['#00FF00', '#FF0000']
+        },
+        magnifyingGlass: {
+            enable: true, 
+            zoomFactor: 7.5
         }
     };
 
@@ -134,7 +138,7 @@ function processData(d){
     for (var i = 0; i < d.length; i++){
         var country = d[i].country;
         var website = d[i].Website;
-        // if we want to count region specific URLS e.g. www.google.com.au
+        // if we want to count region specific URLS e.g. www.Agoogle.com.au
         // website = website.replace(/\.com\..*/, '.com');
         // website = website.replace(/\.co\..*/, '.co');
 
