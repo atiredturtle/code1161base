@@ -106,7 +106,6 @@ function drawPopChart(top=MAX_TOP, tail=MIN_TAIL){
             }]
         },
         options: {
-            responsive: false
         }
     });
 }

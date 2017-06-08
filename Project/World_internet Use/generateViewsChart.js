@@ -85,7 +85,6 @@ function drawViewsChart(tail=MIN_TAIL){
             }]
         },
         options: {
-            responsive: false
         }
     });
 }
