@@ -22,10 +22,12 @@ function drawRegionsMap() {
         colorAxis: {
             colors: ['#00FF00', '#FF0000']
         },
+        defaultColor:'#EEEEEE', //used for null values
         magnifyingGlass: {
             enable: true, 
             zoomFactor: 7.5
-        }
+        },
+        interpolateNulls: true,
     };
 
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
@@ -188,13 +190,14 @@ function generateArray(d, searchSite){
     for (var key in d) {
         var subArr = [];
         subArr.push(key);
+        var popularity = null;
         for (var i = 0; i < d[key].length; i++){
             if (d[key][i] == searchSite){
-                var popularity = i+1;
-                subArr.push(popularity);
-                arr.push(subArr);
+                popularity = i+1;
             }
         }
+        subArr.push(popularity);
+        arr.push(subArr);
     }
     return arr;
 }

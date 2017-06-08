@@ -13,8 +13,6 @@ var myChart;
 //        - E.g. if the 3st item is 10, then 10 countries have the site as their 3rd favourite
 var popDict = {};
 
-var viewsDict = {};
-
 // ----------------- HELPER FUNCTIONS -----------------
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -64,11 +62,6 @@ function processData(d){
         } else {
             popDict[website] = [];
             popDict[website][item.Country_Rank] = 1;
-        }
-
-        // for website view count (dict value is avg daily visitors)
-        if (!(website in viewsDict)){
-            viewsDict[website] = d[i];
         }
     }
 }
