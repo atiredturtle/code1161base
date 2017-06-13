@@ -45,7 +45,7 @@ function getRandomInt(min, max) {
 
 function getRandomColor(){
     var r = getRandomInt(0, 255);
-    var g = getRandomInt(0, 255);
+    var g = getRandomInt(0, 0);
     var b = getRandomInt(0, 255);
     return 'rgba('+r+', '+g+', '+b+', 0.6)';
 }
